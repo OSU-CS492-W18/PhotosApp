@@ -2,7 +2,6 @@
     <string name="app_name">CS 492 Photo Gallery</string>
     <string name="loading_error_message">We couldn\'t connect to Flickr. Check your internet connection and try again.</string>
 
-    <string name="title_activity_photo_view">PhotoViewActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>
