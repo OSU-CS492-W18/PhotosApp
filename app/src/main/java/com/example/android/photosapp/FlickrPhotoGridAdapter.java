@@ -53,7 +53,7 @@ public class FlickrPhotoGridAdapter extends RecyclerView.Adapter<FlickrPhotoGrid
     }
 
     public interface OnPhotoItemClickedListener {
-        void onPhotoItemClicked(FlickrUtils.FlickrPhoto photo);
+        void onPhotoItemClicked(int photoIdx);
     }
 
     class FlickrPhotoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -74,7 +74,7 @@ public class FlickrPhotoGridAdapter extends RecyclerView.Adapter<FlickrPhotoGrid
 
         @Override
         public void onClick(View v) {
-            mOnPhotoItemClickedListener.onPhotoItemClicked(mPhotos[getAdapterPosition()]);
+            mOnPhotoItemClickedListener.onPhotoItemClicked(getAdapterPosition());
         }
     }
 

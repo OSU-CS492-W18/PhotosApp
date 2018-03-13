@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onPhotoItemClicked(FlickrUtils.FlickrPhoto photo) {
+    public void onPhotoItemClicked(int photoIdx) {
         Intent intent = new Intent(this, PhotoViewActivity.class);
         startActivity(intent);
     }
