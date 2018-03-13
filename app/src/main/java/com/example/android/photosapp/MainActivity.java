@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity
     private TextView mLoadingErrorMessageTV;
     private FlickrPhotoGridAdapter mAdapter;
 
+    private FlickrUtils.FlickrPhoto[] mPhotos;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,9 +62,9 @@ public class MainActivity extends AppCompatActivity
         if (data != null) {
             mLoadingErrorMessageTV.setVisibility(View.INVISIBLE);
             mPhotosRV.setVisibility(View.VISIBLE);
-            FlickrUtils.FlickrPhoto[] photos = FlickrUtils.parseFlickrExploreResultsJSON(data);
-            mAdapter.updatePhotos(photos);
-            for (FlickrUtils.FlickrPhoto photo : photos) {
+            mPhotos = FlickrUtils.parseFlickrExploreResultsJSON(data);
+            mAdapter.updatePhotos(mPhotos);
+            for (FlickrUtils.FlickrPhoto photo : mPhotos) {
                 Log.d(TAG, "Got photo: " + photo.url_m);
             }
         } else {
