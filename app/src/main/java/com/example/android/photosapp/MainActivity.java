@@ -36,8 +36,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mLoadingErrorMessageTV = (TextView)findViewById(R.id.tv_loading_error_message);
         mPhotosRV = (RecyclerView)findViewById(R.id.rv_photos);
 
-        mPhotosRV.setLayoutManager(new StaggeredGridLayoutManager(NUM_PHOTO_COLUMNS, StaggeredGridLayoutManager.VERTICAL));
-
         mLoadingIndicatorPB.setVisibility(View.VISIBLE);
         getSupportLoaderManager().initLoader(FLICKR_EXPLORE_LOADER_ID, null, this);
     }
