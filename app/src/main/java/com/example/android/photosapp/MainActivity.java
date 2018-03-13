@@ -1,5 +1,6 @@
 package com.example.android.photosapp;
 
+import android.content.Intent;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
@@ -17,7 +18,8 @@ import com.example.android.photosapp.utils.NetworkUtils;
 
 import java.io.IOException;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String> {
+public class MainActivity extends AppCompatActivity
+        implements LoaderManager.LoaderCallbacks<String>, FlickrPhotoGridAdapter.OnPhotoItemClickedListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int FLICKR_EXPLORE_LOADER_ID = 0;
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private RecyclerView mPhotosRV;
     private ProgressBar mLoadingIndicatorPB;
     private TextView mLoadingErrorMessageTV;
+    private FlickrPhotoGridAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mLoadingIndicatorPB = (ProgressBar)findViewById(R.id.pb_loading_indicator);
         mLoadingErrorMessageTV = (TextView)findViewById(R.id.tv_loading_error_message);
         mPhotosRV = (RecyclerView)findViewById(R.id.rv_photos);
+
+        mAdapter = new FlickrPhotoGridAdapter(this);
+        mPhotosRV.setAdapter(mAdapter);
+
+        mPhotosRV.setHasFixedSize(true);
+        mPhotosRV.setLayoutManager(new StaggeredGridLayoutManager(NUM_PHOTO_COLUMNS, StaggeredGridLayoutManager.VERTICAL));
 
         mLoadingIndicatorPB.setVisibility(View.VISIBLE);
         getSupportLoaderManager().initLoader(FLICKR_EXPLORE_LOADER_ID, null, this);
@@ -52,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             mLoadingErrorMessageTV.setVisibility(View.INVISIBLE);
             mPhotosRV.setVisibility(View.VISIBLE);
             FlickrUtils.FlickrPhoto[] photos = FlickrUtils.parseFlickrExploreResultsJSON(data);
+            mAdapter.updatePhotos(photos);
             for (FlickrUtils.FlickrPhoto photo : photos) {
                 Log.d(TAG, "Got photo: " + photo.url_m);
             }
@@ -65,5 +75,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoaderReset(Loader<String> loader) {
         // Nothing.
+    }
+
+    @Override
+    public void onPhotoItemClicked(FlickrUtils.FlickrPhoto photo) {
+        Intent intent = new Intent(this, PhotoViewActivity.class);
+        startActivity(intent);
     }
 }
