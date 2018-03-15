@@ -82,6 +82,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onPhotoItemClicked(int photoIdx) {
         Intent intent = new Intent(this, PhotoViewActivity.class);
+        intent.putExtra(PhotoViewActivity.EXTRA_PHOTOS, mPhotos);
+        intent.putExtra(PhotoViewActivity.EXTRA_PHOTO_IDX, photoIdx);
         startActivity(intent);
     }
 }
